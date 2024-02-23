@@ -1,11 +1,10 @@
 import {Router} from 'express'
-import publicRoute from './public'
-import testRoute from './test'
+import authRoute from "./authRoute"
 
 const routes = Router()
 
-routes.use('/public', publicRoute)
-routes.use('/test', testRoute)
+// /api/messenger/user-register
+routes.use('/api/messenger',authRoute)
 
 
 

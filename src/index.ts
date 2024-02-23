@@ -1,6 +1,7 @@
 import express from 'express';
 import { CLog } from './helper/AppHelper';
 import cors from 'cors';
+import fileupload from "express-fileupload"
 import routes from './routes';
 import { PrismaClient } from '@prisma/client';
 import {initializingSocketServerOnThisServer} from "./socketServer"
@@ -25,7 +26,7 @@ app.disable('x-powered-by')
 app.use(express.json())
 
 app.use('*', cors())
-
+app.use(fileupload())
 app.use('/', routes)
 
 

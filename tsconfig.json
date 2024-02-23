@@ -107,3 +107,16 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   }
 }
+
+
+
+// # rename .env to .env.development
+// # change NODE_ENV = development
+// # change DATABASE_URL to your own database
+
+// # APP
+// NODE_ENV=example
+// HTTP_PORT=3112
+
+// # DATABASE
+// DATABASE_URL="postgresql://postgres:1234@localhost:5432/postgres?schema=test1"
