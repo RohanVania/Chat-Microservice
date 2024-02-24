@@ -4,13 +4,15 @@ import cors from 'cors';
 import fileupload from "express-fileupload"
 import routes from './routes';
 import { PrismaClient } from '@prisma/client';
-import {initializingSocketServerOnThisServer} from "./socketServer"
+import { initializingSocketServerOnThisServer } from "./socketServer"
+import cloudinaryInitialize from "./config/cloudinaryConfig"
 
-if(!process.env.HTTP_PORT) {
+
+if (!process.env.HTTP_PORT) {
     require('dotenv-flow').config()
 }
 
-if(process.env.SEEDCODE !== 'jurong2024') {
+if (process.env.SEEDCODE !== 'jurong2024') {
     CLog.bad("Start Server need correct env SEEDCODE!")
     process.exit(1)
 }
@@ -24,9 +26,15 @@ app.disable('x-powered-by')
 
 
 app.use(express.json())
+export const cloudinary = cloudinaryInitialize()
 
 app.use('*', cors())
-app.use(fileupload())
+app.use(fileupload(
+    {
+        useTempFiles: true,
+        tempFileDir: "/tmp"
+    }
+))
 app.use('/', routes)
 
 
@@ -39,4 +47,7 @@ initializingSocketServerOnThisServer(server)
 server.on('error', (err) => {
     CLog.bad(`Express server encountered an error: ${err}`);
 })
+
+
+
 
