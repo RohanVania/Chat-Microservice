@@ -16,7 +16,7 @@ export function initializingSocketServerOnThisServer(server: HttpServer) {
 
     //* This is for main namespace
     io.on('connection', (socket) => {
-        console.log("Client Connected to our Socket Server")
+        console.log("Client Connected to our Socket Server",socket.id)
     })
 
 }

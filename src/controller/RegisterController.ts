@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 
 export const RegisterUserOperation = async (req: Request, resp: Response) => {
     try {
-        const { userName, email, password } = req.body;
+        const { userName, email, password, role } = req.body;
 
         // const file= new File([profilePicture],"test")
         // console.log("File =>",file);
@@ -45,27 +45,32 @@ export const RegisterUserOperation = async (req: Request, resp: Response) => {
                     username: userName,
                     password: hashedPassword,
                     profilePicture: imageUrl,
+                    role:role
                 }
             })
 
             console.log(insertResult);
             return resp.status(200).json({
-                status:"Success",
-                msg:"User created successfully",
-                data:insertResult
+                status: "Success",
+                msg: "User created successfully",
+                data: insertResult
             })
 
-        }else{
+        } else {
             return resp.status(200).json({
-                status:"Failed",
-                msg:"User with given email already exists",
-                data:checkUserExist
+                status: "Failed",
+                msg: "User with given email already exists",
+                data: checkUserExist
             })
         }
 
 
-    } catch (err) {
+    } catch (err:any) {
         console.log(err)
+        return resp.status(200).json({
+            status:"Failed",
+            data:err
+        })
     }
 }
 
