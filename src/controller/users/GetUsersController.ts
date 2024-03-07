@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import { prisma } from ".."
+import { prisma } from "../.."
 
 export const getAllDoctors=async (req:Request,resp:Response)=>{
     try{
@@ -8,6 +8,7 @@ export const getAllDoctors=async (req:Request,resp:Response)=>{
                 role:'doctor'
             },
             select:{
+                id:true,
                 username:true,
                 email:true,
                 password:false,

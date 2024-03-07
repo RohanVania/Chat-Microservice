@@ -15,12 +15,33 @@ enum Role {
   patient
   doctor
 }
-model User{
-  id Int @id @default(autoincrement())
-  username String
-  email String @unique
-  password String
+
+enum Status {
+  seen
+  unseen
+}
+
+model User {
+  id             Int    @id @default(autoincrement())
+  username       String
+  email          String @unique
+  password       String
   profilePicture String
-  role Role @default(patient) 
+  role           Role   @default(patient)
+
   @@map("users")
+}
+
+model Message {
+  id            String  @id @default(uuid())
+  senderId      Int
+  receiverId    Int
+  senderName    String
+  receiverName  String
+  receiverEmail String
+  message       String?
+  image         String?
+  status        Status @default(unseen)
+
+  @@map("messages")
 }

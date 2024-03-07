@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import bcrypt from "bcryptjs"
-import { prisma } from "..";
+import { prisma } from "../..";
 import jsonwebtoken from "jsonwebtoken"
 
 export const LoginUserOperation = async (req: Request, resp: Response) => {

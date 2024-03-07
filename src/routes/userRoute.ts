@@ -1,5 +1,5 @@
 import express from "express"
-import {getAllDoctors} from "../controller/GetUsersController"
+import {getAllDoctors} from "../controller/users/GetUsersController"
 
 const userRoute=express.Router();
 

@@ -1,9 +1,10 @@
 import express from 'express';
-import { CLog } from './helper/AppHelper';
 import cors from 'cors';
+import cookieParser from "cookie-parser"
+import { CLog } from './helper/AppHelper';
 import fileupload from "express-fileupload"
-import routes from './routes';
 import { PrismaClient } from '@prisma/client';
+import routes from './routes';
 import { initializingSocketServerOnThisServer } from "./socketServer"
 import cloudinaryInitialize from "./config/cloudinaryConfig"
 
@@ -24,7 +25,7 @@ const SERVER_PORT = process.env.HTTP_PORT;
 const app = express()
 app.disable('x-powered-by')
 
-
+app.use(cookieParser())
 app.use(express.json())
 export const cloudinary = cloudinaryInitialize()
 

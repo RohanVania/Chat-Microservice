@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 // import {s3} from "../config/awsS3"
-import { cloudinary, prisma } from "../index"
+import { cloudinary, prisma } from "../../index"
 import bcrypt from "bcryptjs";
 
 
@@ -20,6 +20,7 @@ export const RegisterUserOperation = async (req: Request, resp: Response) => {
         //     Key:`${file?.profilePicture.name}-${Math.floor(Math.random()*10000)}`,
         //     Body:file?.profilePicture?.data,
         // })
+        
         const file: any = req.files;
 
         const checkUserExist = await prisma.user.findUnique({

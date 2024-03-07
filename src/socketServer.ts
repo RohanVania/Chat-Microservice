@@ -20,10 +20,15 @@ export function initializingSocketServerOnThisServer(server: HttpServer) {
         console.log("Client Connected to our Socket Server",socket.id)
         console.log(socket.handshake)
         socket.emit("hello","hi i am from server")
-    
+        
+        socket.on('sendMessage',(data)=>{
+            
+            console.log("Data from Client",data)
+        })
         
     //* Disconnection socket
         socket.on("disconnect",(reason)=>{
+            console.log("Connecttion closed")
             console.log(reason)
         })
     })
