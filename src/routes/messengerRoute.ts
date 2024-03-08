@@ -8,7 +8,7 @@ import { GetAllMessages } from "../controller/messenger/SaveMessage";
 const messengerRoute=Router();
 
 messengerRoute.post('/savemessage',authMiddleware,SaveMessage)
-messengerRoute.get('/getAllMessages/:id',authMiddleware,GetAllMessages);
+messengerRoute.get('/getAllMessages/:currentChatUser',authMiddleware,GetAllMessages);
 
 
 export default messengerRoute
