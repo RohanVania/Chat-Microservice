@@ -14,6 +14,8 @@ export function initializingSocketServerOnThisServer(server: HttpServer) {
         }
     });
 
+    // Testing
+
 
     //* This is for main namespace
     io.on('connection', (socket) => {
