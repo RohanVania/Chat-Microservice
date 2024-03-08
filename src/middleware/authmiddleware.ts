@@ -16,7 +16,6 @@ export const authMiddleware = async (req:IGetUserAuthInfoRequest , resp: Respons
             })
         }
         const secret=process.env.JWT_TOKEN_SECRET
-        console.log(secret)
         const decode:any=jsonwebtoken.verify(AuthToken,`${secret}`);        
         req.userID=decode.id;
         next();

@@ -8,8 +8,8 @@ export interface IGetUserAuthInfoRequest extends Request {
 
 export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) => {
     try {
-        console.log(req.files);
-        console.log(req?.userID)
+        // console.log(req.files);
+        console.log("Hello",req?.userID)
         const { senderName, senderId, receiverId, receiverName, receiverEmail, message } = req.body;
         let file: any = req.files;
 
@@ -21,7 +21,7 @@ export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) 
         }
 
         if (file) {
-            const res = await cloudinary.uploader.upload(file.file.tempFilePath,
+            const res = await cloudinary.uploader.upload(file.image.tempFilePath,
                 {
                     folder: "/RegisterUser",
                     resource_type: "auto"
@@ -38,7 +38,7 @@ export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) 
                 receiverName:receiverName,
                 receiverEmail:receiverEmail,
                 message:message,
-                // image:file
+                image:file?file:null
             }
         })
 
@@ -60,8 +60,12 @@ export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) 
 
 }
 
-export const GetAllMessages=async (req:Request,resp:Response)=>{
+export const GetAllMessages=async (req:IGetUserAuthInfoRequest,resp:Response)=>{
     try{
+        console.log("Let Retrieve Messsage for that particular User who Id ",req.params?.currentChatUser);
+        resp.status(200).json({
+            status:'Ok'
+        })
     }catch(err){
         console.log(err)
     }

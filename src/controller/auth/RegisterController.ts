@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 export const RegisterUserOperation = async (req: Request, resp: Response) => {
     try {
         const { userName, email, password, role } = req.body;
-
+        
         // const file= new File([profilePicture],"test")
         // console.log("File =>",file);
         // const res=new File([profilePicture],"he");
@@ -22,13 +22,11 @@ export const RegisterUserOperation = async (req: Request, resp: Response) => {
         // })
         
         const file: any = req.files;
-
         const checkUserExist = await prisma.user.findUnique({
             where: {
                 email: email
             }
         })
-        console.log(checkUserExist);
         if (!checkUserExist) {
             const res = await cloudinary.uploader.upload(file.profilePicture.tempFilePath,
                 {
