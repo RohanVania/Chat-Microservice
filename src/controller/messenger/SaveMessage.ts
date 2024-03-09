@@ -1,15 +1,15 @@
 import { Request, Response } from "express"
-import {cloudinary, prisma} from "../../index"
+import { cloudinary, prisma } from "../../index"
 
 export interface IGetUserAuthInfoRequest extends Request {
     userID?: number // or any other type
-  }
+}
 
 
 export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) => {
     try {
         // console.log(req.files);
-        console.log("Hello",req?.userID)
+        console.log("Hello", req?.userID)
         const { senderName, senderId, receiverId, receiverName, receiverEmail, message } = req.body;
         let file: any = req.files;
 
@@ -27,46 +27,76 @@ export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) 
                     resource_type: "auto"
                 }
             )
-            file=res.secure_url
+            file = res.secure_url
         }
 
-        const messageCreated=await prisma.message.create({
-            data:{
-                senderId:+senderId,
-                senderName:senderName,
-                receiverId:+receiverId,
-                receiverName:receiverName,
-                receiverEmail:receiverEmail,
-                message:message,
-                image:file?file:null
+        const messageCreated = await prisma.message.create({
+            data: {
+                senderId: +senderId,
+                senderName: senderName,
+                receiverId: +receiverId,
+                receiverName: receiverName,
+                receiverEmail: receiverEmail,
+                message: message,
+                image: file ? file : null
             }
         })
 
         // console.log(messageCreated);
 
         return resp.status(200).json({
-            status:'Success',
-            message:message,
-            data:messageCreated
+            status: 'Success',
+            message: message,
+            data: messageCreated
         })
 
     } catch (err) {
         console.log(err)
         return resp.status(500).json({
-            status:"Something went wrong",
-            data:err
+            status: "Something went wrong",
+            data: err
         })
     }
 
 }
 
-export const GetAllMessages=async (req:IGetUserAuthInfoRequest,resp:Response)=>{
-    try{
-        console.log("Let Retrieve Messsage for that particular User who Id ",req.params?.currentChatUser);
-        resp.status(200).json({
-            status:'Ok'
+export const GetAllMessages = async (req: IGetUserAuthInfoRequest, resp: Response) => {
+    try {
+        console.log("Let Retrieve Messsage for that particular User who Id ", req.params?.currentChatUser);
+
+        const senderId = req.userID;
+        const receiverId = req.params?.currentChatUser;
+
+        if (!senderId || !receiverId) {
+            return resp.status(404).json({
+                status: 'Failed',
+                msg: 'Missing sender or receiver id'
+            })
+        }
+
+        const messageResult = await prisma.message.findMany({
+            where: {
+                OR:[
+                    {
+                        senderId:+senderId,
+                        receiverId:+receiverId
+                    },
+                    {
+                        senderId:+receiverId,
+                        receiverId:+senderId
+                    }
+                ]
+            
+            } 
         })
-    }catch(err){
+
+        console.log(messageResult);
+
+        resp.status(200).json({
+            status: 'Ok',
+            data: messageResult.length===0?'No messages between this two users':messageResult
+        })
+    } catch (err) {
         console.log(err)
     }
 }
