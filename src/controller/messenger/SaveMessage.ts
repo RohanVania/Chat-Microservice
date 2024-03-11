@@ -9,8 +9,9 @@ export interface IGetUserAuthInfoRequest extends Request {
 export const SaveMessage = async (req: IGetUserAuthInfoRequest, resp: Response) => {
     try {
         // console.log(req.files);
-        console.log("Hello", req?.userID)
+        // console.log("Hello", req?.userID)
         const { senderName, senderId, receiverId, receiverName, receiverEmail, message } = req.body;
+        // console.log(senderName,senderId,receiverId,receiverName,receiverEmail,message);
         let file: any = req.files;
 
         if (!senderName || !senderId || !receiverId || !receiverName || !receiverEmail || !message) {
@@ -90,11 +91,12 @@ export const GetAllMessages = async (req: IGetUserAuthInfoRequest, resp: Respons
             } 
         })
 
-        console.log(messageResult);
+        // console.log(messageResult);
 
         resp.status(200).json({
             status: 'Ok',
-            data: messageResult.length===0?'No messages between this two users':messageResult
+            data:messageResult,
+            message: messageResult.length===0?'No messages between this two users':messageResult
         })
     } catch (err) {
         console.log(err)

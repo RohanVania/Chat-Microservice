@@ -3,7 +3,8 @@ import jsonwebtoken from "jsonwebtoken"
 
 
 export interface IGetUserAuthInfoRequest extends Request {
-    userID?: number // or any other type
+    userID?: number, // or any other type
+    role?:string
   }
 
 export const authMiddleware = async (req:IGetUserAuthInfoRequest , resp: Response, next: NextFunction) => {
@@ -17,7 +18,10 @@ export const authMiddleware = async (req:IGetUserAuthInfoRequest , resp: Respons
         }
         const secret=process.env.JWT_TOKEN_SECRET
         const decode:any=jsonwebtoken.verify(AuthToken,`${secret}`);        
+        
         req.userID=decode.id;
+        req.role=decode.role;
+
         next();
     } catch (err) {
         console.log(1);
