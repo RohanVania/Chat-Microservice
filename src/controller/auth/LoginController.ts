@@ -16,14 +16,14 @@ export const LoginUserOperation = async (req: Request, resp: Response) => {
         
         if(checkPassword){
 
-            const jsonwebtokenPayload={id:UserDetail.id,email:UserDetail.email,username:UserDetail.username,profilePicture:UserDetail.profilePicture}
+            const jsonwebtokenPayload={id:UserDetail.id,email:UserDetail.email,username:UserDetail.username,profilePicture:UserDetail.profilePicture,role:UserDetail.role};
             const secret=process.env.JWT_TOKEN_SECRET
             const token=jsonwebtoken.sign(jsonwebtokenPayload,`${secret}`,{
                 expiresIn:process.env.JWT_EXPIRES_IN
             })
-            console.log(token);
+            // console.log(token);
             resp.cookie("AuthToken",token,{
-                expires: new Date(Date.now() + 900000) // 15 Minutes
+                expires: new Date(Date.now() + 3600*1000) // 1 hr
             })
             return resp.status(200).json({
                 status:"Success",
