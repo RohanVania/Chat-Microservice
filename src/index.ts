@@ -29,7 +29,9 @@ app.use(cookieParser())
 app.use(express.json())
 export const cloudinary = cloudinaryInitialize()
 
-app.use('*', cors())
+app.use('*', cors({
+    origin:"*"
+}))
 app.use(fileupload(
     {
         useTempFiles: true,
