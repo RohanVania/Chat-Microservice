@@ -48,3 +48,18 @@ export const LoginUserOperation = async (req: Request, resp: Response) => {
         })
     }
 }
+
+export const LogoutUserOperation=async(req:Request,resp:Response)=>{
+    console.log("hello")
+    try{
+        resp.clearCookie('AuthToken');
+        resp.end();
+    }catch(err){
+        console.log(err);
+        resp.status(200).json({
+            status:'Failed',
+            msg:'Something went wrong in Logout',
+            data:err
+        })
+    }
+}
