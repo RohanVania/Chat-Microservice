@@ -50,7 +50,6 @@ export const LoginUserOperation = async (req: Request, resp: Response) => {
 }
 
 export const LogoutUserOperation=async(req:Request,resp:Response)=>{
-    console.log("hello")
     try{
         resp.clearCookie('AuthToken');
         resp.end();
